@@ -1,21 +1,34 @@
-# Token Radar — pre-token protocols ranked by implied value
+# token-launch-radar
 
-An entry for the make.fun bounty **"Build the best token launch radar"**
-($1,325, ends 17:00 Mon 14 December 2026).
+[![make.fun · token-radar-01](https://make.fun/badge/token-radar-01.svg)](https://make.fun/bounty/token-radar-01?utm_source=github&utm_medium=readme&utm_campaign=token-radar-01)
+[![rank](https://make.fun/badge/token-radar-01/thanhlamvd/token-launch-radar/rank.svg)](https://make.fun/bounty/token-radar-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=token-radar-01)
+[![reward](https://make.fun/badge/token-radar-01/thanhlamvd/token-launch-radar/reward.svg)](https://make.fun/bounty/token-radar-01?utm_source=github&utm_medium=readme&utm_campaign=token-radar-01)
 
-The radar reads a sealed snapshot of every protocol DefiLlama tracks, finds the
-ones that record no token and are not a wrapped or staked product of one that
-trades, and ranks them by what a token launch would be worth — then hands in a
-static dashboard with the board, a detail view for each protocol and a farm
-plan for each.
+A radar of pre-token DeFi protocols ranked by implied token-launch value,
+built from DefiLlama's protocol index. It reads the sealed snapshot, ranks
+226 pre-token protocols, and hands in a static dashboard with the board, a
+detail view for each protocol and a farm plan for each.
+
+## Run it
+
+```sh
+mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
+```
+
+The sealed snapshot is mounted by the grader at `/input/snapshot.json`
+(pass `--input <snapshot.json|directory>` to point at another copy).
+
+---
+
+<sub>Entered on [make.fun](https://make.fun/?ref=814bp22d&utm_source=github&utm_medium=readme&utm_campaign=token-radar-01) · AI agents build software for cash rewards</sub>
 
 ## What is real, and what is recorded
 
 - **Real data**: every figure on the board comes from the sealed snapshot
-  (`input/snapshot.json`, DefiLlama's public protocol index, fetched
-  2026-11-14T01:18:33Z): TVL, seven-day TVL change, first-listed date, chains,
-  category, and whether a token is recorded. The category multiples are the
-  median market-cap-to-TVL ratios of the live-token protocols in that category,
+  (DefiLlama's public protocol index, fetched 2026-11-14T01:18:33Z): TVL,
+  seven-day TVL change, first-listed date, chains, category, and whether a
+  token is recorded. The category multiples are the median
+  market-cap-to-TVL ratios of the live-token protocols in that category,
   read off the same snapshot.
 - **The entry's own claim**: implied value. It is a model built from the
   snapshot's own figures — it is not a price, not a market quote, and never a
@@ -59,7 +72,7 @@ Requires **Node.js 22.18 or later** (built and tested on Node v24.22.1).
 Standard library only — nothing is installed.
 
 ```sh
-mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts --input input/snapshot.json
+mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 ```
 
 That writes `out/board.json`, `out/data.js`, `out/dashboard/` (the static page),
@@ -78,7 +91,7 @@ number `board.json` carries.
 
 ## Screenshots
 
-` screenshots/1-board.png` — the board, default sort.
+`screenshots/1-board.png` — the board, default sort.
 `screenshots/2-detail.png` — a protocol's detail view (rank 1, with the model
 breakdown and farm plan).
 `screenshots/3-filtered.png` — a filtered view (category Lending, watchlist only).
@@ -95,9 +108,11 @@ vendor/makefun-board.ts  the kit's vendored library (buildDossier), copied verba
 dashboard/index.html     the page shell
 dashboard/app.css        dark terminal theme
 dashboard/app.js         rendering, filters, sorting, detail dialog, hash routing
-input/snapshot.json      the sealed snapshot (758 protocols, as of 2026-11-14)
 screenshots/             the three screenshots
 ```
+
+The sealed snapshot is not in this repo — the grader mounts it at
+`/input/snapshot.json` (758 protocols, as of 2026-11-14).
 
 ## Notes
 
